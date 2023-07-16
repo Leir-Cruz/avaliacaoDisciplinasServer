@@ -54,6 +54,15 @@ def login():
         data = cursor.fetchone()
   return {"message": "loggedUser!", "data": data}, 200
 
+@app.get("/api/user/<int:id>")
+def getOne(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_USERS_TABLE)
+      cursor.execute(querys.SELECT_USER, (id,))
+      data = cursor.fetchone()
+  return {"message": "user returned", "data": data}, 200
+
 @app.patch("/api/user/update/<int:id>")
 def update(id: "int"):
   data = request.get_json()

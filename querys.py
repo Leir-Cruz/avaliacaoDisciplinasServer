@@ -60,13 +60,14 @@ INSERT_COMPLAINT = '''INSERT INTO complaints (status, user_id, comment_ud) VALUE
 
 #Select all Querys
 SELECT_USERS = '''SELECT * FROM users;'''
+SELECT_DEPARTAMENTS = '''SELECT * FROM departaments;'''
 SELECT_TEACHERS = '''SELECT * FROM teachers;'''
 SELECT_CLASSES = '''SELECT * FROM classes;'''
 SELECT_COMMENTS = '''SELECT * FROM teachers WHERE teacher_id=%s OR class_id=%s;'''
 
 #Select one Querys
 LOGIN = '''SELECT email FROM users WHERE email=%s AND password=%s LIMIT 1;'''
-
+SELECT_USER = '''SELECT * FROM users WHERE id=%s LIMIT 1;'''
 
 # Update Querys
 UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s;'''
