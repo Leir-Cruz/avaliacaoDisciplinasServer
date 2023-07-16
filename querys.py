@@ -70,7 +70,7 @@ LOGIN = '''SELECT email FROM users WHERE email=%s AND password=%s LIMIT 1;'''
 SELECT_USER = '''SELECT * FROM users WHERE id=%s LIMIT 1;'''
 
 # Update Querys
-UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s;'''
+UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s RETURNING *;'''
 
 # Delete Querys
 DELETE_USER = '''DELETE FROM users WHERE id=%s;'''

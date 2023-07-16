@@ -16,9 +16,7 @@ sqlPassword = os.getenv( "DATABASE_PASSWORD")
 # Connect to the database
 connection = psycopg2.connect(database="avaliacao_disciplina_db", user=sqlUser, password=sqlPassword, host="localhost", port="5432")
 
-#api methods
-
-
+#user controller
 @app.post("/api/user/create")
 def create():
   data = request.get_json()
@@ -74,7 +72,8 @@ def update(id: "int"):
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_USERS_TABLE)
       cursor.execute(querys.UPDATE_USER, (email, password, code, graduation, id))
-  return {"message": "user update"}, 200
+      data = cursor.fetchall()
+  return {"message": "user update", "data": data}, 200
 
 
 @app.delete("/api/user/delete/<int:id>")
