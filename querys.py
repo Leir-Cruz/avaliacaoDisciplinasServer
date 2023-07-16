@@ -68,10 +68,13 @@ SELECT_COMMENTS = '''SELECT * FROM teachers WHERE teacher_id=%s OR class_id=%s;'
 #Select one Querys
 LOGIN = '''SELECT email FROM users WHERE email=%s AND password=%s LIMIT 1;'''
 SELECT_USER = '''SELECT * FROM users WHERE id=%s LIMIT 1;'''
+SELECT_DEPARTAMENT = '''SELECT * FROM departaments WHERE id=%s LIMIT 1;'''
 
 # Update Querys
 UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s RETURNING *;'''
+UPDATE_DEPARTAMENT = '''UPDATE departaments SET name=%s WHERE id=%s RETURNING *;'''
 
 # Delete Querys
 DELETE_USER = '''DELETE FROM users WHERE id=%s;'''
+DELETE_DEPARTAMENT = '''DELETE FROM departaments WHERE id=%s;'''
 

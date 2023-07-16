@@ -83,3 +83,54 @@ def delete(id: int):
       cursor.execute(querys.CREATE_USERS_TABLE)
       cursor.execute(querys.DELETE_USER, (id,))
   return {"message": "user deleted!"}, 200
+
+#departament controller
+
+@app.post("/api/departament/create")
+def create():
+  data = request.get_json()
+  name = data["name"]
+  with connection:
+      with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+          cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
+          cursor.execute(querys.INSERT_DEPARTAMENT, (name))
+  return {"message": "departament created!"}, 201
+
+@app.get("/api/departaments")
+def index():
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
+        cursor.execute(querys.SELECT_DEPARTAMENTS)
+        data = cursor.fetchall()
+  return {"message": "all departaments sended!", "data": data}, 200
+
+
+@app.get("/api/departament/<int:id>")
+def getOne(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_USERS_TABLE)
+      cursor.execute(querys.SELECT_USER, (id,))
+      data = cursor.fetchone()
+  return {"message": "departament returned", "data": data}, 200
+
+@app.patch("/api/departament/update/<int:id>")
+def update(id: "int"):
+  data = request.get_json()
+  name = data["name"]
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
+      cursor.execute(querys.UPDATE_DEPARTAMENT, (name, id))
+      data = cursor.fetchall()
+  return {"message": "departament update", "data": data}, 200
+
+
+@app.delete("/api/departament/delete/<int:id>")
+def delete(id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
+      cursor.execute(querys.DELETE_DEPARTAMENT, (id,))
+  return {"message": "departament deleted!"}, 200
