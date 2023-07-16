@@ -1,4 +1,4 @@
-# Create Querys
+# Create Tables
 
 CREATE_USERS_TABLE = '''CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
@@ -69,6 +69,8 @@ LOGIN = '''SELECT email FROM users WHERE email=%s AND password=%s LIMIT 1;'''
 
 
 # Update Querys
+UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s;'''
 
 # Delete Querys
+DELETE_USER = '''DELETE FROM users WHERE id=%s;'''
 
