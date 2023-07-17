@@ -17,7 +17,7 @@ CREATE_DEPARTAMENTS_TABLE = '''CREATE TABLE IF NOT EXISTS departaments (
 CREATE_TEACHERS_TABLE = '''CREATE TABLE IF NOT EXISTS teachers (
   id SERIAL PRIMARY KEY,
   name varchar(250) NOT NULL,
-  FOREIGN KEY(departament_id) REFERENCES departaments(id) ON DELETE CASCADE
+  departament_id integer REFERENCES departaments(id) ON DELETE CASCADE
   ); '''
 
 
@@ -30,23 +30,23 @@ CREATE_SUBJECTS_TABLE = '''CREATE TABLE IF NOT EXISTS subjects (
 CREATE_CLASSES_TABLE = '''CREATE TABLE IF NOT EXISTS classes (
   id SERIAL PRIMARY KEY,
   name varchar(250) NOT NULL,
-  FOREIGN KEY(teacher_id) REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
-  FOREIGN KEY(subject_id) REFERENCES subjects(id) ON DELETE CASCADE NOT NULL
+  teacher_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
+  subject_id integer REFERENCES subjects(id) ON DELETE CASCADE NOT NULL
   ); '''
 
 CREATE_COMMENTS_TABLE = '''CREATE TABLE IF NOT EXISTS comments (
   id SERIAL PRIMARY KEY,
   content text NOT NULL,
   grade integer NOT NULL,
-  FOREIGN KEY(teacher_id) REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
-  FOREIGN KEY(class_id) REFERENCES classes(id) ON DELETE CASCADE NOT NULL
+  teacher_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
+  class_id integer REFERENCES classes(id) ON DELETE CASCADE NOT NULL
   ); '''
 
 CREATE_COMPLAINT_TABLE = '''CREATE TABLE IF NOT EXISTS complaints (
   id SERIAL PRIMARY KEY,
   status varchar(250) NOT NULL,
-  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  FOREIGN KEY(comment_id) REFERENCES comments(id) ON DELETE CASCADE NOT NULL
+  user_id integer REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  comment_id integer REFERENCES comments(id) ON DELETE CASCADE NOT NULL
   ); '''
 
 # Insert Querys
