@@ -26,7 +26,9 @@ You will need to create a database in your postgresql using command line
 
 `sudo -u <yourpostgresusername> psql`
 
-it will require your role password to proceed. Once successfully conected then create the database using:
+it will require your role password to proceed.
+
+## If first time running project run:
 
 `create database avaliacao_disciplida_db;`
 
