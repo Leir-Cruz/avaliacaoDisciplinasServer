@@ -97,3 +97,16 @@ DELETE_CLASS = '''DELETE FROM classes WHERE id=%s;'''
 DELETE_COMMENT = '''DELETE FROM comments  WHERE id=%s;'''
 DELETE_COMPLAINT = '''DELETE FROM complaints  WHERE id=%s;'''
 
+
+#Select comments
+SELECT_TEACHER_COMMENTS = '''SELECT * FROM comments WHERE teacher_id=%s;'''
+SELECT_CLASS_COMMENTS = '''SELECT * FROM comments WHERE class_id=%s;'''
+
+
+# Comments and Complaints
+PROCECURE_DELETE_COMMENT = '''CREATE PROCEDURE accepet_complaint(comment_id integer, complaint_id integer )
+LANGUAGE SQL
+AS $$ 
+  DELETE FROM comments AS C  WHERE C.id= comment_id;
+  UPDATE FROM complaints SET status="accepted" AS A WHERE A.id = complaint_id;
+$$;'''

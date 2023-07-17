@@ -192,6 +192,16 @@ def delete_teacher(id: int):
   return {"message": "teacher deleted!"}, 200
 
 
+@app.get("/api/teacher/<int:id>/comments")
+def get_teacher_comments(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.execute(querys.CREATE_TEACHERS_TABLE)
+      cursor.execute(querys.SELECT_TEACHER_COMMENTS, (id,))
+      data = cursor.fetchall()
+  return data, 200
+
 #subject controller
 
 @app.post("/api/subject/create")
@@ -297,6 +307,17 @@ def delete_class(id: int):
       cursor.execute(querys.CREATE_CLASSES_TABLE)
       cursor.execute(querys.DELETE_CLASS, (id,))
   return {"message": "class deleted!"}, 200
+
+
+@app.get("/api/class/<int:id>/comments")
+def get_class_comment(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.execute(querys.CREATE_CLASSES_TABLE)
+      cursor.execute(querys.SELECT_CLASS_COMMENTS, (id,))
+      data = cursor.fetchall()
+  return data, 200
 
 
 #comment controller
@@ -413,3 +434,11 @@ def delete_complaint(id: int):
       cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
       cursor.execute(querys.DELETE_COMPLAINT, (id,))
   return {"message": "complaint deleted!"}, 200
+
+@app.patch("/api/complaint/<int:complaint_id>/delete_comment/int:comment_id>")
+def accepet_complaint(admin_id: int, complaint_id: int, comment_id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.callproc('insertPrediction',(comment_id, complaint_id))
