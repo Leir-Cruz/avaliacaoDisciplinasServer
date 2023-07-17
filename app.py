@@ -4,9 +4,10 @@ from psycopg2.extras import RealDictCursor
 import querys
 from flask import Flask, request
 from dotenv import load_dotenv
-
+from flask_cors import CORS
 #create flask api
 app = Flask(__name__)
+CORS(app)
 
 #getting ours enviromment variables
 load_dotenv()
@@ -24,11 +25,11 @@ def create():
   password = data["password"]
   code = data["code"]
   graduation= data["graduation"]
-  isAdmin = data["isAdmin"]
+  isadmin = data["isadmin"]
   with connection:
       with connection.cursor(cursor_factory=RealDictCursor) as cursor:
           cursor.execute(querys.CREATE_USERS_TABLE)
-          cursor.execute(querys.INSERT_USER, (email, password,code, graduation, isAdmin))
+          cursor.execute(querys.INSERT_USER, (email, password,code, graduation, isadmin))
   return {"message": "User created!"}, 201
 
 @app.get("/api/users")
@@ -38,7 +39,7 @@ def index_users():
         cursor.execute(querys.CREATE_USERS_TABLE)
         cursor.execute(querys.SELECT_USERS)
         data = cursor.fetchall()
-  return {"message": "all users sended!", "data": data}, 200
+  return  data, 200
 
 @app.post("/api/login")
 def login():
@@ -50,7 +51,7 @@ def login():
         cursor.execute(querys.CREATE_USERS_TABLE)
         cursor.execute(querys.LOGIN, (email, password))
         data = cursor.fetchone()
-  return {"message": "loggedUser!", "data": data}, 200
+  return data, 200
 
 @app.get("/api/user/<int:id>")
 def get_user(id: "int"):
@@ -59,7 +60,7 @@ def get_user(id: "int"):
       cursor.execute(querys.CREATE_USERS_TABLE)
       cursor.execute(querys.SELECT_USER, (id,))
       data = cursor.fetchone()
-  return {"message": "user returned", "data": data}, 200
+  return data, 200
 
 @app.patch("/api/user/update/<int:id>")
 def update_user(id: "int"):
