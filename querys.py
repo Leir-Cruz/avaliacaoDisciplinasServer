@@ -38,11 +38,12 @@ CREATE_COMMENTS_TABLE = '''CREATE TABLE IF NOT EXISTS comments (
   id SERIAL PRIMARY KEY,
   content text NOT NULL,
   grade integer NOT NULL,
+  user_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
   teacher_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
   class_id integer REFERENCES classes(id) ON DELETE CASCADE NOT NULL
   ); '''
 
-CREATE_COMPLAINT_TABLE = '''CREATE TABLE IF NOT EXISTS complaints (
+CREATE_COMPLAINTS_TABLE = '''CREATE TABLE IF NOT EXISTS complaints (
   id SERIAL PRIMARY KEY,
   status varchar(250) NOT NULL,
   user_id integer REFERENCES users(id) ON DELETE CASCADE NOT NULL,

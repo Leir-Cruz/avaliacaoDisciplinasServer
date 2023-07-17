@@ -111,8 +111,8 @@ def index_departaments():
 def get_departament(id: "int"):
   with connection:
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-      cursor.execute(querys.CREATE_USERS_TABLE)
-      cursor.execute(querys.SELECT_USER, (id,))
+      cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
+      cursor.execute(querys.SELECT_DEPARTAMENT, (id,))
       data = cursor.fetchone()
   return data, 200
 
@@ -192,3 +192,224 @@ def delete_teacher(id: int):
   return {"message": "teacher deleted!"}, 200
 
 
+#subject controller
+
+@app.post("/api/subject/create")
+def create_subject():
+  data = request.get_json()
+  name = data["name"]
+  with connection:
+      with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+          cursor.execute(querys.CREATE_SUBJECTS_TABLE)
+          cursor.execute(querys.INSERT_SUBJECT, (name,))
+  return {"message": "subject created!"}, 201
+
+@app.get("/api/subjects")
+def index_subjects():
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(querys.CREATE_SUBJECTS_TABLE)
+        cursor.execute(querys.SELECT_SUBJECTS)
+        data = cursor.fetchall()
+  return data, 200
+
+
+@app.get("/api/subject/<int:id>")
+def get_subject(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_SUBJECTS_TABLE)
+      cursor.execute(querys.SELECT_SUBJECT, (id,))
+      data = cursor.fetchone()
+  return data, 200
+
+@app.patch("/api/subject/update/<int:id>")
+def update_subject(id: "int"):
+  data = request.get_json()
+  name = data["name"]
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_SUBJECTS_TABLE)
+      cursor.execute(querys.UPDATE_SUBJECT, (name, id))
+      data = cursor.fetchall()[0]
+  return data, 200
+
+
+@app.delete("/api/subject/delete/<int:id>")
+def delete_subject(id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_SUBJECTS_TABLE)
+      cursor.execute(querys.DELETE_SUBJECT, (id,))
+  return {"message": "subject deleted!"}, 200
+
+#class controller
+
+@app.post("/api/class/create")
+def create_class():
+  data = request.get_json()
+  name = data["name"]
+  teacher_id = data["teacher_id"]
+  subject_id = data["subject_id"]
+  with connection:
+      with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+          cursor.execute(querys.CREATE_CLASSES_TABLE)
+          cursor.execute(querys.INSERT_CLASS, (name,teacher_id, subject_id))
+  return {"message": "class created!"}, 201
+
+@app.get("/api/classes")
+def index_class():
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(querys.CREATE_CLASSES_TABLE)
+        cursor.execute(querys.SELECT_CLASSES)
+        data = cursor.fetchall()
+  return data, 200
+
+
+@app.get("/api/class/<int:id>")
+def get_class(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_CLASSES_TABLE)
+      cursor.execute(querys.SELECT_CLASS, (id,))
+      data = cursor.fetchone()
+  return data, 200
+
+@app.patch("/api/class/update/<int:id>")
+def update_class(id: "int"):
+  data = request.get_json()
+  name = data["name"]
+  teacher_id = data["teacher_id"]
+  subject_id = data["subject_id"]
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_CLASSES_TABLE)
+      cursor.execute(querys.UPDATE_CLASS, (name, teacher_id, subject_id, id))
+      data = cursor.fetchall()[0]
+  return data, 200
+
+
+@app.delete("/api/class/delete/<int:id>")
+def delete_class(id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_CLASSES_TABLE)
+      cursor.execute(querys.DELETE_CLASS, (id,))
+  return {"message": "class deleted!"}, 200
+
+
+#comment controller
+
+@app.post("/api/comment/create")
+def create_comment():
+  data = request.get_json()
+  content = data["content"]
+  grade = data["grade"]
+  user_id = data["user_id"]
+  teacher_id = data["teacher_id"]
+  class_id = data["class_id"]
+  with connection:
+      with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+          cursor.execute(querys.CREATE_COMMENTS_TABLE)
+          cursor.execute(querys.INSERT_COMMENT, (content, grade ,user_id ,teacher_id, class_id))
+  return {"message": "comment created!"}, 201
+
+@app.get("/api/comments")
+def index_comment():
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(querys.CREATE_COMMENTS_TABLE)
+        cursor.execute(querys.SELECT_COMMENTS)
+        data = cursor.fetchall()
+  return data, 200
+
+
+@app.get("/api/comment/<int:id>")
+def get_comment(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.execute(querys.SELECT_COMMENT, (id,))
+      data = cursor.fetchone()
+  return data, 200
+
+@app.patch("/api/comment/update/<int:id>")
+def update_comment(id: "int"):
+  data = request.get_json()
+  content = data["content"]
+  grade = data["grade"]
+  user_id = data["user_id"]
+  teacher_id = data["teacher_id"]
+  class_id = data["class_id"]
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.execute(querys.UPDATE_COMMENT, (content, grade ,user_id ,teacher_id, class_id, id))
+      data = cursor.fetchall()[0]
+  return data, 200
+
+
+@app.delete("/api/comment/delete/<int:id>")
+def delete_comment(id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMMENTS_TABLE)
+      cursor.execute(querys.DELETE_COMMENT, (id,))
+  return {"message": "comment deleted!"}, 200
+
+
+#complaint controller
+
+@app.post("/api/complaint/create")
+def create_complaint():
+  data = request.get_json()
+  status = data["status"]
+  user_id = data["user_id"]
+  comment_id = data["comment_id"]
+  with connection:
+      with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+          cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+          cursor.execute(querys.INSERT_COMPLAINT, (status, user_id, comment_id))
+  return {"message": "complaint created!"}, 201
+
+@app.get("/api/complaints")
+def index_complaint():
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+        cursor.execute(querys.SELECT_COMPLAINTS)
+        data = cursor.fetchall()
+  return data, 200
+
+
+@app.get("/api/complaint/<int:id>")
+def get_complaint(id: "int"):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+      cursor.execute(querys.SELECT_COMPLAINT, (id,))
+      data = cursor.fetchone()
+  return data, 200
+
+@app.patch("/api/complaint/update/<int:id>")
+def update_complaint(id: "int"):
+  data = request.get_json()
+  status = data["status"]
+  user_id = data["user_id"]
+  comment_id = data["comment_id"]
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+      cursor.execute(querys.UPDATE_COMPLAINT, (status, user_id, comment_id, id))
+      data = cursor.fetchall()[0]
+  return data, 200
+
+
+@app.delete("/api/complaint/delete/<int:id>")
+def delete_complaint(id: int):
+  with connection:
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+      cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
+      cursor.execute(querys.DELETE_COMPLAINT, (id,))
+  return {"message": "complaint deleted!"}, 200
