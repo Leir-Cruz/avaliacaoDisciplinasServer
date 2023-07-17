@@ -56,25 +56,43 @@ INSERT_TEACHER = '''INSERT INTO teachers (name, departament_id) VALUES (%s, %s);
 INSERT_SUBJECT = '''INSERT INTO subjects (name) VALUES (%s);'''
 INSERT_CLASS = '''INSERT INTO classes (name, teacher_id, subject_id) VALUES (%s, %s, %s);'''
 INSERT_COMMENT = '''INSERT INTO comments (content, grade, user_id, teacher_id, class_id) VALUES (%s, %d, %s, %s, %s);'''
-INSERT_COMPLAINT = '''INSERT INTO complaints (status, user_id, comment_ud) VALUES (%s, %s, %s);'''
+INSERT_COMPLAINT = '''INSERT INTO complaints (status, user_id, comment_id) VALUES (%s, %s, %s);'''
 
 #Select all Querys
 SELECT_USERS = '''SELECT * FROM users;'''
 SELECT_DEPARTAMENTS = '''SELECT * FROM departaments;'''
 SELECT_TEACHERS = '''SELECT * FROM teachers;'''
+SELECT_SUBJECTS = '''SELECT * FROM subjects;'''
 SELECT_CLASSES = '''SELECT * FROM classes;'''
-SELECT_COMMENTS = '''SELECT * FROM teachers WHERE teacher_id=%s OR class_id=%s;'''
+SELECT_COMMENTS = '''SELECT * FROM comments;'''
+SELECT_COMPLAINTS = '''SELECT * FROM complaints;'''
 
 #Select one Querys
-LOGIN = '''SELECT email FROM users WHERE email=%s AND password=%s LIMIT 1;'''
+LOGIN = '''SELECT * FROM users WHERE email=%s AND password=%s LIMIT 1;'''
 SELECT_USER = '''SELECT * FROM users WHERE id=%s LIMIT 1;'''
 SELECT_DEPARTAMENT = '''SELECT * FROM departaments WHERE id=%s LIMIT 1;'''
+SELECT_TEACHER = '''SELECT * FROM teachers WHERE id=%s LIMIT 1;'''
+SELECT_SUBJECT = '''SELECT * FROM subjects WHERE id=%s LIMIT 1;'''
+SELECT_CLASS = '''SELECT * FROM classes WHERE id=%s LIMIT 1;'''
+SELECT_COMMENT = '''SELECT * FROM comments WHERE id=%s LIMIT 1;'''
+SELECT_COMPLAINT = '''SELECT * FROM complaints WHERE id=%s LIMIT 1;'''
+
 
 # Update Querys
 UPDATE_USER = '''UPDATE users SET email=%s, password=%s, code=%s, graduation=%s WHERE id=%s RETURNING *;'''
 UPDATE_DEPARTAMENT = '''UPDATE departaments SET name=%s WHERE id=%s RETURNING *;'''
+UPDATE_TEACHER = '''UPDATE teachers SET name=%s, departament_id=%s WHERE id=%s RETURNING *;'''
+UPDATE_SUBJECT = '''UPDATE subjects SET name=%s WHERE id=%s RETURNING *;'''
+UPDATE_CLASS = '''UPDATE classes SET name=%s, teacher_id=%s, subject_id=%s WHERE id=%s RETURNING *;'''
+UPDATE_COMMENT = '''UPDATE comments SET content=%s, grade=%s, user_id=%s, teacher_id=%s, class_id=%s WHERE id=%s RETURNING *;'''
+UPDATE_COMPLAINT = '''UPDATE complaints SET status=%s, user_id=%s, comment_id=%s WHERE id=%s RETURNING *;'''
 
 # Delete Querys
 DELETE_USER = '''DELETE FROM users WHERE id=%s;'''
 DELETE_DEPARTAMENT = '''DELETE FROM departaments WHERE id=%s;'''
+DELETE_TEACHER = '''DELETE FROM teachers WHERE id=%s;'''
+DELETE_SUBJECT = '''DELETE FROM subjects WHERE id=%s;'''
+DELETE_CLASS = '''DELETE FROM classes WHERE id=%s;'''
+DELETE_COMMENT = '''DELETE FROM comments  WHERE id=%s;'''
+DELETE_COMPLAINT = '''DELETE FROM complaints  WHERE id=%s;'''
 

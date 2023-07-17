@@ -22,7 +22,9 @@ You will need to create a database in your postgresql using command line
 
 - Open command line and type:
 
-`sudo -u postgres psql`
+`sudo -i -u <yourpostgreusername>`
+
+`sudo -u <yourpostgresusername> psql`
 
 it will require your role password to proceed. Once successfully conected then create the database using:
 
