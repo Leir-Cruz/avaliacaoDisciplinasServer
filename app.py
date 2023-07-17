@@ -73,8 +73,8 @@ def update_user(id: "int"):
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_USERS_TABLE)
       cursor.execute(querys.UPDATE_USER, (email, password, code, graduation, id))
-      data = cursor.fetchall()
-  return {"message": "user update", "data": data}, 200
+      data = cursor.fetchall()[0]
+  return data, 200
 
 
 @app.delete("/api/user/delete/<int:id>")
@@ -104,7 +104,7 @@ def index_departaments():
         cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
         cursor.execute(querys.SELECT_DEPARTAMENTS)
         data = cursor.fetchall()
-  return {"message": "all departaments sended!", "data": data}, 200
+  return data, 200
 
 
 @app.get("/api/departament/<int:id>")
@@ -114,7 +114,7 @@ def get_departament(id: "int"):
       cursor.execute(querys.CREATE_USERS_TABLE)
       cursor.execute(querys.SELECT_USER, (id,))
       data = cursor.fetchone()
-  return {"message": "departament returned", "data": data}, 200
+  return data, 200
 
 @app.patch("/api/departament/update/<int:id>")
 def update_departament(id: "int"):
@@ -124,8 +124,8 @@ def update_departament(id: "int"):
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_DEPARTAMENTS_TABLE)
       cursor.execute(querys.UPDATE_DEPARTAMENT, (name, id))
-      data = cursor.fetchall()
-  return {"message": "departament update", "data": data}, 200
+      data = cursor.fetchall()[0]
+  return data, 200
 
 
 @app.delete("/api/departament/delete/<int:id>")
@@ -158,7 +158,7 @@ def index_teachers():
         cursor.execute(querys.CREATE_TEACHERS_TABLE)
         cursor.execute(querys.SELECT_TEACHERS)
         data = cursor.fetchall()
-  return {"message": "all teacherS sended!", "data": data}, 200
+  return data, 200
 
 
 @app.get("/api/teacher/<int:id>")
@@ -168,7 +168,7 @@ def get_teacher(id: "int"):
       cursor.execute(querys.CREATE_TEACHERS_TABLE)
       cursor.execute(querys.SELECT_TEACHER, (id,))
       data = cursor.fetchone()
-  return {"message": "teacher returned", "data": data}, 200
+  return data, 200
 
 @app.patch("/api/teacher/update/<int:id>")
 def update_teacher(id: "int"):
@@ -179,8 +179,8 @@ def update_teacher(id: "int"):
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_TEACHERS_TABLE)
       cursor.execute(querys.UPDATE_TEACHER, (name,departament_id ,id))
-      data = cursor.fetchall()
-  return {"message": "teacher update", "data": data}, 200
+      data = cursor.fetchall()[0]
+  return data, 200
 
 
 @app.delete("/api/teacher/delete/<int:id>")
