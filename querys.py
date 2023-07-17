@@ -38,9 +38,9 @@ CREATE_COMMENTS_TABLE = '''CREATE TABLE IF NOT EXISTS comments (
   id SERIAL PRIMARY KEY,
   content text NOT NULL,
   grade integer NOT NULL,
-  user_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
-  teacher_id integer REFERENCES teachers(id) ON DELETE CASCADE NOT NULL,
-  class_id integer REFERENCES classes(id) ON DELETE CASCADE NOT NULL
+  user_id integer REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  teacher_id integer REFERENCES teachers(id) ON DELETE CASCADE,
+  class_id integer REFERENCES classes(id) ON DELETE CASCADE 
   ); '''
 
 CREATE_COMPLAINTS_TABLE = '''CREATE TABLE IF NOT EXISTS complaints (
@@ -56,7 +56,7 @@ INSERT_DEPARTAMENT = '''INSERT INTO departaments (name) VALUES (%s);'''
 INSERT_TEACHER = '''INSERT INTO teachers (name, departament_id) VALUES (%s, %s);'''
 INSERT_SUBJECT = '''INSERT INTO subjects (name) VALUES (%s);'''
 INSERT_CLASS = '''INSERT INTO classes (name, teacher_id, subject_id) VALUES (%s, %s, %s);'''
-INSERT_COMMENT = '''INSERT INTO comments (content, grade, user_id, teacher_id, class_id) VALUES (%s, %d, %s, %s, %s);'''
+INSERT_COMMENT = '''INSERT INTO comments (content, grade, user_id, teacher_id, class_id) VALUES (%s, %s, %s, %s, %s);'''
 INSERT_COMPLAINT = '''INSERT INTO complaints (status, user_id, comment_id) VALUES (%s, %s, %s);'''
 
 #Select all Querys
