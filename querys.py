@@ -86,7 +86,7 @@ UPDATE_TEACHER = '''UPDATE teachers SET name=%s, departament_id=%s WHERE id=%s R
 UPDATE_SUBJECT = '''UPDATE subjects SET name=%s WHERE id=%s RETURNING *;'''
 UPDATE_CLASS = '''UPDATE classes SET name=%s, teacher_id=%s, subject_id=%s WHERE id=%s RETURNING *;'''
 UPDATE_COMMENT = '''UPDATE comments SET content=%s, grade=%s, user_id=%s, teacher_id=%s, class_id=%s WHERE id=%s RETURNING *;'''
-UPDATE_COMPLAINT = '''UPDATE complaints SET status=%s, user_id=%s, comment_id=%s WHERE id=%s RETURNING *;'''
+UPDATE_COMPLAINT = '''UPDATE complaints SET status=%s WHERE id=%s RETURNING *;'''
 
 # Delete Querys
 DELETE_USER = '''DELETE FROM users WHERE id=%s;'''

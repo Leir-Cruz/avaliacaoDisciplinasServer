@@ -417,12 +417,11 @@ def get_complaint(id: "int"):
 def update_complaint(id: "int"):
   data = request.get_json()
   status = data["status"]
-  user_id = data["user_id"]
-  comment_id = data["comment_id"]
+
   with connection:
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
-      cursor.execute(querys.UPDATE_COMPLAINT, (status, user_id, comment_id, id))
+      cursor.execute(querys.UPDATE_COMPLAINT, (status, id))
       data = cursor.fetchall()[0]
   return data, 200
 
