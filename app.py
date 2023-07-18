@@ -434,10 +434,12 @@ def delete_complaint(id: int):
       cursor.execute(querys.DELETE_COMPLAINT, (id,))
   return {"message": "complaint deleted!"}, 200
 
-@app.patch("/api/complaint/<int:complaint_id>/delete_comment/int:comment_id>")
-def accepet_complaint(admin_id: int, complaint_id: int, comment_id: int):
+@app.delete("/api/complaint/<int:complaint_id>/delete_comment/<int:comment_id>")
+def accepet_complaint(complaint_id: int, comment_id: int):
   with connection:
     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
       cursor.execute(querys.CREATE_COMPLAINTS_TABLE)
       cursor.execute(querys.CREATE_COMMENTS_TABLE)
-      cursor.callproc('insertPrediction',(comment_id, complaint_id))
+      cursor.execute(querys.CREATE_PROCECURE_ACCEPT_COMPLAINT)
+      cursor.execute(querys.PROCECURE_ACCEPT_COMPLAINT,(complaint_id, comment_id))
+  return {"message": "complaint accepted!"}, 200

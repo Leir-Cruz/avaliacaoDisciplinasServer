@@ -103,10 +103,15 @@ SELECT_TEACHER_COMMENTS = '''SELECT * FROM comments WHERE teacher_id=%s;'''
 SELECT_CLASS_COMMENTS = '''SELECT * FROM comments WHERE class_id=%s;'''
 
 
-# Comments and Complaints
-PROCECURE_DELETE_COMMENT = '''CREATE PROCEDURE accepet_complaint(comment_id integer, complaint_id integer )
-LANGUAGE SQL
+# Procecure
+CREATE_PROCECURE_ACCEPT_COMPLAINT = '''CREATE OR REPLACE PROCEDURE accepet_complaint(complaint_id integer, comment_id integer)
 AS $$ 
-  DELETE FROM comments AS C  WHERE C.id= comment_id;
-  UPDATE FROM complaints SET status="accepted" AS A WHERE A.id = complaint_id;
-$$;'''
+  BEGIN
+  DELETE FROM comments WHERE id=comment_id;
+  UPDATE complaints SET status='accepted' WHERE id = complaint_id;
+END;
+$$
+LANGUAGE PLPGSQL;
+'''
+
+PROCECURE_ACCEPT_COMPLAINT = '''call accepet_complaint(%s, %s)'''
